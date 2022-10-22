@@ -1,6 +1,9 @@
 const bd = require("../bd.json");
+import { EETIPOS, convertToShortName } from "./extras/TiposEE"
+import axios from 'axios'
 
 export class SubMapa {
+  mapName: string;
   name: string;
   steps: Array<string>;
 
@@ -11,30 +14,58 @@ export class SubMapa {
 }
 
 export class Mapa {
+  id: string;
   name: string;
-  easterEgg: Array<SubMapa>;
-  wonderWeapon: Array<SubMapa>;
-  upgradeWonderWeapon: Array<SubMapa>;
+  ee: Array<SubMapa>;
+  ww: Array<SubMapa>;
+  uww: Array<SubMapa>;
   extras: Array<SubMapa>;
 
   constructor(name: string, easterEgg: Array<SubMapa>, wonderWeapon: Array<SubMapa>, upgradeWonderWeapon: Array<SubMapa>, extras: Array<SubMapa>) {
     this.name = name;
-    this.easterEgg = easterEgg;
-    this.wonderWeapon = wonderWeapon;
-    this.upgradeWonderWeapon = upgradeWonderWeapon;
+    this.ee = easterEgg;
+    this.ww = wonderWeapon;
+    this.uww = upgradeWonderWeapon;
     this.extras = extras;
   }
 }
 
-export function getMapa(mapName: string): Mapa {
-  const mapas: Array<Mapa> = bd.maps;
-  const mapa = mapas.findIndex(value => value.name == mapName);
+export async function getMapByName(mapName: string, tipoee: EETIPOS): Promise<Array<SubMapa>> {
+  const tipo = convertToShortName(tipoee);
 
-  if (mapa < 0)
-    console.log(mapName)
+  const url = `http://localhost:9000/tutoriais/${mapName}/${tipo}`;
 
+  try {
+    const result = await axios.get(url,
+      {
+        headers: {
+          Accept: "applicaiton/json"
+        }
+      }
+    )
 
-  return mapas[mapa];
+    const subMapa: Array<SubMapa> = result.data;
+
+    return subMapa;
+  }
+  catch {
+    return null;
+  }
+}
+
+export async function getAllMaps(): Promise<Mapa[]> {
+  const result = await axios.get(
+    'http://localhost:9000/allmaps',
+    {
+      headers: {
+        Accept: "applicaiton/json"
+      }
+    }
+  );
+
+  const mapas = result.data;
+
+  return mapas;
 }
 
 export function getAllMapsName(): Array<string> {

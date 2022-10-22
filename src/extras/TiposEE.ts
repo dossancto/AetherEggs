@@ -34,3 +34,18 @@ export function convertToName(tipo: EETIPOS): string {
       return "Easter Egg"
   }
 }
+
+export function convertToShortName(tipo: EETIPOS): string{
+  switch (tipo) {
+    case 0:
+      return "ee"
+    case 1:
+      return "ww"
+    case 2:
+      return "uww"
+    case 3:
+      return "Extras"
+    default:
+      return "ee"
+  }
+}

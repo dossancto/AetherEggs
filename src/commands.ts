@@ -1,6 +1,6 @@
 import { Message } from 'discord.js';
 import { ComandosDiversos } from "./diversos"
-import { getMapa } from "./Database";
+import { getMapByName, getAllMaps } from "./Database";
 import { BuildTutorial } from "./CreateTutorials";
 import ManagePages from './ManagePages';
 import { convertEE } from "./extras/TiposEE"
@@ -27,25 +27,27 @@ export default class Command {
     this.use(tokens);
   }
 
-  use(tokens: Array<string>) {
+  async use(tokens: Array<string>) {
     const command = tokens.shift();
     const args = tokens;
 
     console.log(`Comando: ${command}\nArgs: ${args}`);
 
     const comandoDiverso = ComandosDiversos.find(cmd => cmd.input == command);
-    const mapa = getMapa(command);
+
+    const tipo = convertEE(args[0])
+
+    const mapa = await getMapByName(command, tipo) ?? false
 
     if (comandoDiverso) {
       this.message.reply(comandoDiverso.output.call(this));
+      return;
     }
 
-    else if (mapa) {
+    if (mapa) {
       const managePages = new ManagePages(this.message);
 
-      const tipo = convertEE(args[0])
-
-      const bt = new BuildTutorial(mapa, tipo);
+      const bt = new BuildTutorial(mapa);
       const embedTutorial = bt.buildPage();
 
       managePages.createMenus(embedTutorial)

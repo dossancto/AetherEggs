@@ -16,7 +16,6 @@ class Option {
       label: this.label,
       value: this.value
     })
-
   }
 }
 

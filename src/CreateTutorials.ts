@@ -1,4 +1,4 @@
-import { EETIPOS, convertToName } from "./extras/TiposEE"
+import { EETIPOS, convertToName, convertEE } from "./extras/TiposEE"
 import { Mapa, SubMapa } from "./Database";
 
 export class Fild {
@@ -73,35 +73,10 @@ export class Collection {
 }
 
 export class BuildTutorial {
-
-  map: Mapa;
-  ee: EETIPOS;
   tutorial: Array<SubMapa>;
 
-  constructor(map: Mapa, ee: EETIPOS) {
-    this.map = map;
-    this.ee = ee;
-
-    console.log(ee);
-
-    switch (ee) {
-      case EETIPOS.EASTER_EGG:
-        this.tutorial = map.easterEgg;
-        break;
-      case EETIPOS.WONDER_WEAPON:
-        this.tutorial = map.wonderWeapon;
-        break;
-      case EETIPOS.UPGRADE_WONDER_WEAPON:
-        this.tutorial = map.upgradeWonderWeapon;
-        break;
-      case EETIPOS.EXTRAS:
-        this.tutorial = map.extras;
-        break;
-      default:
-        this.tutorial = map.easterEgg;
-        break;
-    }
-
+  constructor(tutorial: Array<SubMapa>) {
+    this.tutorial = tutorial;
   }
 
   buildPage(): Collection {
@@ -116,15 +91,15 @@ export class BuildTutorial {
 
       pacos.forEach(t => {
 
-        if(len > 1800 && !t.startsWith("$file:")){
-          pags.push(new Pag(this.map.name, this.ee, fields, step.name));
+        if (len > 1800 && !t.startsWith("$file:")) {
+          pags.push(new Pag(this.tutorial[0].mapName, convertEE("ww"), fields, step.name));
           fields = [];
           len = 0;
         }
 
         if (t.startsWith("$file:")) {
           const img = t.replace("$file:", "");
-          pags.push(new Pag(this.map.name, this.ee, fields, step.name, img));
+          pags.push(new Pag(this.tutorial[0].mapName, convertEE("ww"), fields, step.name, img));
           fields = [];
           len = 0;
         }
@@ -135,7 +110,7 @@ export class BuildTutorial {
         }
       })
       if (fields) {
-        pags.push(new Pag(this.map.name, this.ee, fields, step.name));
+        pags.push(new Pag(this.tutorial[0].mapName, convertEE("ww"), fields, step.name));
       }
       books.push(new Book(step.name, pags));
     })
