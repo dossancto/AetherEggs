@@ -2,21 +2,20 @@ export enum EETIPOS {
   EASTER_EGG = 0,
   WONDER_WEAPON = 1,
   UPGRADE_WONDER_WEAPON = 2,
-  EXTRAS = 3
+  EXTRAS = 3,
+  NONE = 4
 }
 
 export function convertEE(tipo: string): EETIPOS {
   switch (tipo) {
     case "ee":
-      return EETIPOS.EASTER_EGG;
-    case "ww":
-      return EETIPOS.WONDER_WEAPON;
+      return EETIPOS.EASTER_EGG; case "ww": return EETIPOS.WONDER_WEAPON;
     case "uww":
       return EETIPOS.UPGRADE_WONDER_WEAPON;
     case "extras":
       return EETIPOS.EXTRAS;
     default:
-      return EETIPOS.EASTER_EGG;
+      return EETIPOS.NONE;
   }
 }
 
@@ -31,7 +30,7 @@ export function convertToName(tipo: EETIPOS): string {
     case 3:
       return "Extras"
     default:
-      return "Easter Egg"
+      return "Não definido"
   }
 }
 
@@ -44,8 +43,8 @@ export function convertToShortName(tipo: EETIPOS): string{
     case 2:
       return "uww"
     case 3:
-      return "Extras"
+      return "extras"
     default:
-      return "ee"
+      return "none"
   }
 }

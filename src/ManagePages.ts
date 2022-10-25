@@ -56,11 +56,11 @@ export default class ManagePages {
       .addComponents(
         new ButtonBuilder()
           .setCustomId('prev')
-          .setLabel("👈")
+          .setLabel("ANTERIOR")
           .setStyle(ButtonStyle.Primary),
         new ButtonBuilder()
           .setCustomId('next')
-          .setLabel("👉")
+          .setLabel("PROXIMO")
           .setStyle(ButtonStyle.Primary)
       )
 

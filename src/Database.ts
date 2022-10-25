@@ -44,7 +44,7 @@ export async function getMapByName(mapName: string, tipoee: EETIPOS): Promise<Ar
       }
     )
 
-    const subMapa: Array<SubMapa> = result.data;
+    const subMapa: SubMapa[] = result.data;
 
     return subMapa;
   }
@@ -68,7 +68,7 @@ export async function getAllMaps(): Promise<Mapa[]> {
   return mapas;
 }
 
-export function getAllMapsName(): Array<string> {
+export async function getAllMapsName(): Promise<Array<string>> {
   const mapas: Array<Mapa> = bd.maps;
   return mapas.map(val => val.name);
 }
