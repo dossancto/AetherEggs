@@ -28,7 +28,7 @@ export default class Pagination {
   }
 
   getPag(): any {
-    return this.pages[this.actualPage].getEmbed();
+    return this.pages[this.actualPage].getEmbed(this.actualPage, this.maxPages);
   }
 
 }

@@ -29,7 +29,7 @@ export class Pag {
     this.imgUrl = imgUrl;
   }
 
-  getEmbed() {
+  getEmbed(numPage: number = 1, maxPages: number = 1) {
     const convedtedField = this.filds.map(f => (
       { name: f.name, value: f.value }
     ));
@@ -47,7 +47,7 @@ export class Pag {
       },
       timestamp: new Date().toISOString(),
       footer: {
-        text: 'Some footer text here',
+        text: `Página ${(numPage + 1).toString()}/${maxPages}`,
       },
     };
   }
