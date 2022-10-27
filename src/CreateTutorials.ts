@@ -110,7 +110,7 @@ export class BuildTutorial {
         }
       })
       if (fields) {
-        pags.push(new Pag(this.tutorial[0].mapName, convertEE("ww"), fields, step.name));
+        pags.push(new Pag(this.tutorial[0].mapName, convertEE("ww"), fields, step.name, null));
       }
       books.push(new Book(step.name, pags));
     })
