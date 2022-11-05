@@ -1,6 +1,7 @@
-const bd = require("../bd.json");
 import { EETIPOS, convertToShortName } from "./extras/TiposEE"
 import axios from 'axios'
+
+const apiUrl = "https://salty-falls-02512.herokuapp.com";
 
 export class SubMapa {
   mapName: string;
@@ -33,7 +34,7 @@ export class Mapa {
 export async function getMapByName(mapName: string, tipoee: EETIPOS): Promise<Array<SubMapa>> {
   const tipo = convertToShortName(tipoee);
 
-  const url = `http://localhost:9000/tutoriais/${mapName}/${tipo}`;
+  const url = `${apiUrl}/tutoriais/${mapName}/${tipo}`;
 
   try {
     const result = await axios.get(url,
@@ -54,8 +55,9 @@ export async function getMapByName(mapName: string, tipoee: EETIPOS): Promise<Ar
 }
 
 export async function getAllMaps(): Promise<Mapa[]> {
+  const url = apiUrl + "/allmaps";
   const result = await axios.get(
-    'http://localhost:9000/allmaps',
+    url,
     {
       headers: {
         Accept: "applicaiton/json"
@@ -68,7 +70,8 @@ export async function getAllMaps(): Promise<Mapa[]> {
   return mapas;
 }
 
-export async function getAllMapsName(): Promise<Array<string>> {
-  const mapas: Array<Mapa> = bd.maps;
-  return mapas.map(val => val.name);
-}
+// TODO: Refazer em forma de API
+// export async function getAllMapsName(): Promise<Array<string>> {
+//   const mapas: Array<Mapa> = bd.maps;
+//   return mapas.map(val => val.name);
+// }
