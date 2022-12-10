@@ -1,6 +1,6 @@
 import { ActionRowBuilder, ButtonBuilder, ButtonStyle, Message, SelectMenuBuilder } from "discord.js"
 import Pagination from "./Pagination"
-import { Collection } from "./CreateTutorials";
+import BookCollection from "./BuildEmbed/Collection";
 
 class Option {
   label: string;
@@ -28,7 +28,7 @@ export default class ManagePages {
     this.message = message;
   }
 
-  convertToOption(collection: Collection) {
+  convertToOption(collection: BookCollection) {
     let option: Array<any> = [];
 
     collection.books.forEach((val, i) => {
@@ -42,7 +42,7 @@ export default class ManagePages {
     return option;
   }
 
-  createMenus(tutorials: Collection) {
+  createMenus(tutorials: BookCollection) {
     const opt: any = this.convertToOption(tutorials);
     this.menu = new ActionRowBuilder<SelectMenuBuilder>()
       .addComponents(
