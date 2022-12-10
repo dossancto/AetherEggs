@@ -1,11 +1,11 @@
 import { convertEE } from "../extras/TiposEE"
-import { SubMapa } from "../Database";
 import Field from "./Field" 
 import Pag from "./Pag";
 import Book from "./Book";
 import BookCollection from "./Collection";
+import SubMapa from "../API/models/Submapa";
 
-export class BuildTutorial {
+export default class BuildTutorial {
   tutorial: Array<SubMapa>;
 
   constructor(tutorial: Array<SubMapa>) {

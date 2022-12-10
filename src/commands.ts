@@ -1,7 +1,7 @@
 import { Message } from 'discord.js';
 import { ComandosDiversos } from "./diversos"
-import { getMapByName, getAllMaps } from "./Database";
-import { BuildTutorial } from "./CreateTutorials";
+import { getMapByName } from "./API/Database";
+import BuildTutorial from "./BuildEmbed/CreateTutorials";
 import ManagePages from './ManagePages';
 import { convertEE, EETIPOS } from "./extras/TiposEE"
 

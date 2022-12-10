@@ -1,4 +1,4 @@
-import { Pag } from "./CreateTutorials"
+import Pag from "./BuildEmbed/Pag";
 
 export default class Pagination {
   actualPage: number;
