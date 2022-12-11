@@ -17,7 +17,14 @@ export default class Pag {
     this.imgUrl = imgUrl;
   }
 
-  getEmbed(numPage: number = 1, maxPages: number = 1) {
+  /**
+  * Create a JSON version for Discord Embed, with the page infos.
+  * @method
+  * @param {number} numPage - The actual page
+  * @param {number} maxPages - The lenght of pages
+  * @returns {any} A json with the embed infos
+  */
+  getEmbed(numPage: number = 1, maxPages: number = 1): any {
     const convedtedField = this.filds.map(f => (
       { name: f.name, value: f.value }
     ));
