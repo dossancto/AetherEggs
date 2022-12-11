@@ -1,53 +1,49 @@
 import { convertEE } from "../extras/TiposEE"
-import Field from "./Field" 
+import Field from "./Field"
 import Pag from "./Pag";
 import Book from "./Book";
 import BookCollection from "./Collection";
 import SubMapa from "../API/models/Submapa";
 
-export default class BuildTutorial {
-  tutorial: Array<SubMapa>;
+/**
+  * Converts a tutorial to a collection of a embed.
+ *
+ */
 
-  constructor(tutorial: Array<SubMapa>) {
-    this.tutorial = tutorial;
-  }
+export function buildBookCollection(tutorial: SubMapa[]): BookCollection {
+  let len = 0;
+  let books: Array<Book> = [];
 
-  buildPage(): BookCollection {
-    let len = 0;
-    let books: Array<Book> = [];
+  const imgPrefix = "$file:";
 
-    this.tutorial.forEach(step => {
-      let pags: Array<Pag> = [];
-      let fields: Array<Field> = [];
-      let id = 0;
-      const pacos: Array<string> = step.steps;
+  tutorial.forEach(step => {
+    let pags: Array<Pag> = [];
+    let fields: Array<Field> = [];
+    let id = 0;
+    const pacos: Array<string> = step.steps;
 
-      pacos.forEach(t => {
+    pacos.forEach(t => {
+      const isAimage = t.startsWith(imgPrefix)
 
-        if (len > 1800 && !t.startsWith("$file:")) {
-          pags.push(new Pag(this.tutorial[0].mapName, convertEE("ww"), fields, step.name));
-          fields = [];
-          len = 0;
-        }
-
-        if (t.startsWith("$file:")) {
-          const img = t.replace("$file:", "");
-          pags.push(new Pag(this.tutorial[0].mapName, convertEE("ww"), fields, step.name, img));
-          fields = [];
-          len = 0;
-        }
-        else {
-          id++;
-          fields.push(new Field(id.toString(), t));
-          len += t.length;
-        }
-      })
-      if (fields) {
-        pags.push(new Pag(this.tutorial[0].mapName, convertEE("ww"), fields, step.name, null));
+      // Splits the embed into diferent pages
+      if (len > 1800 || isAimage) {
+        const img = t.replace(imgPrefix, "");
+        pags.push(new Pag(tutorial[0].mapName, convertEE("ww"), fields, step.name, isAimage ? img : ""));
+        fields = [];
+        len = 0;
       }
-      books.push(new Book(step.name, pags));
-    })
 
-    return new BookCollection(books);
-  }
+      else {
+        id++;
+        fields.push(new Field(id.toString(), t));
+        len += t.length;
+      }
+    })
+    if (fields) {
+      pags.push(new Pag(tutorial[0].mapName, convertEE("ww"), fields, step.name, null));
+    }
+    books.push(new Book(step.name, pags));
+  })
+
+  return new BookCollection(books);
 }

@@ -5,6 +5,5 @@ export default class BookCollection {
 
   constructor(books: Array<Book>) {
     this.books = books;
-
   }
 }

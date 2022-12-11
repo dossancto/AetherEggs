@@ -8,4 +8,14 @@ export default class Field {
     this.value = value;
     this.inline = inline;
   }
+
+  /**
+  * Returns a JSON representation of this class
+  *
+  */
+  getJSON(): { name: string, value: string } {
+    return ({
+      name: this.name, value: this.value
+    })
+  }
 }

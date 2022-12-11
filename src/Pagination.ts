@@ -11,7 +11,7 @@ export default class Pagination {
 
   /**
   *
-  * @param {Pag[]} pages - The new Pages to set.
+  * @param {Pag[]} pages - The Pages that will be controlled
   *
  */
   constructor(pages: Array<Pag>) {
@@ -57,7 +57,7 @@ export default class Pagination {
   *
 * */
 
-  getPag(): any {
+  getPag()  {
     return this.pages[this.actualPage].getEmbed(this.actualPage, this.maxPages);
   }
 

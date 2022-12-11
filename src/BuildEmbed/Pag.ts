@@ -22,12 +22,9 @@ export default class Pag {
   * @method
   * @param {number} numPage - The actual page
   * @param {number} maxPages - The lenght of pages
-  * @returns {any} A json with the embed infos
   */
-  getEmbed(numPage: number = 1, maxPages: number = 1): any {
-    const convedtedField = this.filds.map(f => (
-      { name: f.name, value: f.value }
-    ));
+  getEmbed(numPage: number = 1, maxPages: number = 1)  {
+    const convedtedField = this.filds.map(f => f.getJSON());
     return {
       color: 0x0099ff,
       title: this.mapName.toUpperCase(),

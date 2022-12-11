@@ -1,7 +1,7 @@
 import { Message } from 'discord.js';
 import { ComandosDiversos } from "./diversos"
 import { getMapByName } from "./API/Database";
-import BuildTutorial from "./BuildEmbed/CreateTutorials";
+import { buildBookCollection } from "./BuildEmbed/CreateTutorials";
 import ManagePages from './ManagePages';
 import { convertEE, EETIPOS } from "./extras/TiposEE"
 
@@ -52,8 +52,7 @@ export default class Command {
     if (mapa) {
       const managePages = new ManagePages(this.message);
 
-      const bt = new BuildTutorial(mapa);
-      const embedTutorial = bt.buildPage();
+      const embedTutorial = buildBookCollection(mapa);
 
       managePages.createMenus(embedTutorial)
     }

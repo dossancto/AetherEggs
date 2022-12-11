@@ -19,6 +19,11 @@ class Option {
   }
 }
 
+// Input filters
+const filter = interaction => interaction.isSelectMenu();
+const btnFilter = interaction => interaction.customId == "next" || interaction.customId == "prev";
+
+
 export default class ManagePages {
   message: Message;
   menu: ActionRowBuilder<SelectMenuBuilder>;
@@ -69,8 +74,6 @@ export default class ManagePages {
     this.message.channel
       .send({ embeds: [pagination.getPag()], components: [this.menu, this.buttons] })
       .then((drop) => {
-        const filter = interaction => interaction.isSelectMenu();
-        const btnFilter = interaction => interaction.customId == "next" || interaction.customId == "prev";
 
         const menuCollector = drop.createMessageComponentCollector({
           filter,
@@ -82,7 +85,7 @@ export default class ManagePages {
           const key = parseInt(collected.values[0]);
           collected.deferUpdate();
           pagination.set(tutorials.books[key].pages);
-          drop.edit({ embeds: [pagination.getPag()] })
+          await drop.edit({ embeds: [pagination.getPag()] })
         })
 
         btnCollector.on('collect', async collected => {
